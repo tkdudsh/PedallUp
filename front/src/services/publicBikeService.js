@@ -1,8 +1,6 @@
 import api from "../api/axios";
 import {
   BIKE_HERO_STATS,
-  STATIONS_MOCK,
-  HOURLY_USAGE,
   MONTHLY_USAGE,
   TOP_STATIONS,
   AGE_DISTRIBUTION,
@@ -32,12 +30,8 @@ async function getBikeRoutes() {
 
 // 향후 FastAPI: GET /api/bike/seoul/stations
 async function getStations() {
-  try {
-    const { data } = await api.get("/bike/seoul/stations");
-    return data;
-  } catch {
-    return { stations: STATIONS_MOCK, hourlyUsage: HOURLY_USAGE };
-  }
+  const { data } = await api.get("/bike/seoul/stations");
+  return data;
 }
 
 // 향후 FastAPI: GET /api/ai/bike/analysis

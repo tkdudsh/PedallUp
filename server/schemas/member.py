@@ -40,5 +40,5 @@ class MemberResponse(BaseModel):
 class LoginResponse(BaseModel):
     isLogin: bool
     role: str | None = None
+    name: str | None = None
     accessToken: str | None = None
-

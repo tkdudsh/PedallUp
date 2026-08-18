@@ -4,11 +4,20 @@ import authService from "../services/authService";
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("pedalup_user"));
+    } catch {
+      return null;
+    }
+  });
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    () => Boolean(localStorage.getItem("pedalup_access_token"))
+  );
 
   const applySession = useCallback(({ accessToken, user: nextUser }) => {
     localStorage.setItem("pedalup_access_token", accessToken);
+    localStorage.setItem("pedalup_user", JSON.stringify(nextUser));
     setUser(nextUser);
     setIsAuthenticated(true);
   }, []);
@@ -31,18 +40,6 @@ export function AuthProvider({ children }) {
     [applySession]
   );
 
-  const loginWithGoogle = useCallback(async () => {
-    const session = await authService.loginWithGoogle();
-    applySession(session);
-    return session;
-  }, [applySession]);
-
-  const loginWithKakao = useCallback(async () => {
-    const session = await authService.loginWithKakao();
-    applySession(session);
-    return session;
-  }, [applySession]);
-
   const logout = useCallback(() => {
     authService.logout();
     setUser(null);
@@ -51,7 +48,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, login, signup, loginWithGoogle, loginWithKakao, logout }}
+      value={{ user, isAuthenticated, login, signup, logout }}
     >
       {children}
     </AuthContext.Provider>

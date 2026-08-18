@@ -6,7 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from database.connection import Base, create_database_if_not_exists, engine
 from models.member import MemberModel  # noqa: F401 - registers the table metadata
+from models.station import StationModel  # noqa: F401 - registers the table metadata
 from routes.member import router as member_router
+from routes.station import router as station_router
 
 
 @asynccontextmanager
@@ -34,6 +36,7 @@ app.add_middleware(
 )
 
 app.include_router(member_router, prefix="/api/member")
+app.include_router(station_router, prefix="/api/bike/seoul/stations")
 
 
 @app.get("/health", tags=["health"])

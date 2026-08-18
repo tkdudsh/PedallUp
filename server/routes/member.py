@@ -24,7 +24,10 @@ def signup(item: MemberCreate, db: Session = Depends(get_db)) -> MemberModel:
         )
     )
     if duplicate:
-        raise HTTPException(status_code=409, detail="이미 사용 중인 아이디, 이메일 또는 전화번호입니다.")
+        raise HTTPException(
+            status_code=409,
+            detail="이미 사용 중인 아이디, 이메일 또는 전화번호입니다.",
+        )
 
     member = MemberModel(
         id=item.id,
@@ -51,5 +54,9 @@ def login(item: LoginItem, db: Session = Depends(get_db)) -> LoginResponse:
         return LoginResponse(isLogin=False)
 
     access_token = create_access_token(subject=member.id, role=member.role)
-    return LoginResponse(isLogin=True, role=member.role, accessToken=access_token)
-
+    return LoginResponse(
+        isLogin=True,
+        role=member.role,
+        name=member.name,
+        accessToken=access_token,
+    )
