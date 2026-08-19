@@ -13,4 +13,3 @@ class MemberModel(Base):
     phone: Mapped[str] = mapped_column(String(20), nullable=False, unique=True, index=True)
     email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True, index=True)
     role: Mapped[str] = mapped_column(String(30), nullable=False, default="USER")
-
