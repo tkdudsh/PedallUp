@@ -23,7 +23,7 @@ class ChatService:
         station_repository: StationRepository | None = None,
     ) -> None:
         self.station_repository = station_repository or StationRepository()
-        self.model = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
+        self.model = os.getenv("OPENAI_MODEL", "gpt-5.4-mini")
 
     def _get_client(self) -> OpenAI:
         api_key = os.getenv("OPENAI_API_KEY", "").strip()

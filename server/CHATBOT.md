@@ -6,7 +6,7 @@
 
 ```env
 OPENAI_API_KEY=발급받은_API_KEY
-OPENAI_MODEL=gpt-4.1-mini
+OPENAI_MODEL=gpt-5.4-mini
 ```
 
 ## API
